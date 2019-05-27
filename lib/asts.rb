@@ -2,7 +2,8 @@ require "asts/version"
 require 'asts/config'
 
 module Asts
-  class Error < StandardError; end
+  class Error < StandardError
+  end
 
   class << self
     def config
