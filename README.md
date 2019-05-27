@@ -20,7 +20,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+Asts.configure do |config|
+ config.dir = 'path/to/your/project'
+end
+
+Asts.extract # { "file1.rb" => #<RubyVM::AbstractSyntaxTree::Node:SCOPE@1:0-3:3>, "file2.rb" => #<RubyVM::AbstractSyntaxTree::Node:SCOPE@1:0-3:3> }
+```
 
 ## Development
 
