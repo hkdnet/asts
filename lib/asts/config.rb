@@ -4,6 +4,7 @@ module Asts
 
     def initialize
       @exts = ['.rb']
+      @exclude = []
     end
   end
 end

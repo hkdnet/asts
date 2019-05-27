@@ -10,7 +10,10 @@ module Asts
     end
 
     def all_files
-      Dir.glob("#{@config.dir}/**/*")
+      Dir.glob("#{@config.dir}/**/*").select do |e|
+        relative_path = Pathname.new(e).relative_path_from(@config.dir)
+        @config.exclude.none? { |e| e.match?(relative_path) }
+      end
     end
   end
 end
