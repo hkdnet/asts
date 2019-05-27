@@ -5,6 +5,16 @@ module Asts
   class Error < StandardError
   end
 
+  class Detector
+    def initialize(config)
+      @config = config
+    end
+
+    def target?(_filename)
+      true
+    end
+  end
+
   class << self
     def config
       @config ||= Asts::Config.new
@@ -15,8 +25,11 @@ module Asts
     end
 
     def extract
+      detector = Detector.new(config)
       Dir.glob("#{config.dir}/**/*.rb").each_with_object({}) do |f, h|
-        h[f] = RubyVM::AbstractSyntaxTree.parse_file(f)
+        if detector.target?(f)
+          h[f] = RubyVM::AbstractSyntaxTree.parse_file(f)
+        end
       end
     end
   end
