@@ -14,6 +14,10 @@ module Asts
       ext = File.extname(filename)
       @config.exts.any? { |e| ext === e }
     end
+
+    def all_files
+      Dir.glob("#{@config.dir}/**/*")
+    end
   end
 
   class << self
@@ -27,7 +31,7 @@ module Asts
 
     def extract
       detector = Detector.new(config)
-      Dir.glob("#{config.dir}/**/*").each_with_object({}) do |f, h|
+      detector.all_files.each_with_object({}) do |f, h|
         if detector.target?(f)
           h[f] = RubyVM::AbstractSyntaxTree.parse_file(f)
         end
