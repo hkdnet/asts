@@ -14,19 +14,24 @@ module Asts
           relative_path: relative_path,
         )
       end
-      relative_paths.select do |file_info|
-        File.file?(file_info.absolute_path) &&
-          !exclude?(file_info) && target?(file_info)
-      end
+      relative_paths.select { |file_info| target?(file_info) }
     end
 
     private
+
+    def target?(file_info)
+      file?(file_info) && !exclude?(file_info) && extname?(file_info)
+    end
+
+    def file?(file_info)
+      File.file?(file_info.absolute_path)
+    end
 
     def exclude?(file_info)
       @config.exclude.any? { |filter| filter === file_info }
     end
 
-    def target?(file_info)
+    def extname?(file_info)
       ext = File.extname(file_info.relative_path)
       @config.exts.any? { |e| ext === e }
     end
