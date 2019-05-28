@@ -8,14 +8,14 @@ module Asts
 
     # @return [Array<Asts::Detector::FileInfo>]
     def target_files
-      relative_paths = Dir.glob("#{@config.dir}/**/*").map do |e|
+      file_infos = Dir.glob("#{@config.dir}/**/*").map do |e|
         relative_path = Pathname.new(e).relative_path_from(@config.dir).to_s
         FileInfo.new(
           absolute_path: e,
           relative_path: relative_path,
         )
       end
-      relative_paths.select { |file_info| target?(file_info) }
+      file_infos.select { |file_info| target?(file_info) }
     end
 
     private
