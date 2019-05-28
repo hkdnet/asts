@@ -1,6 +1,7 @@
 require "asts/version"
 require 'asts/config'
 require 'asts/detector'
+require 'asts/parser'
 
 module Asts
   class Error < StandardError
@@ -17,8 +18,9 @@ module Asts
 
     def extract
       detector = Detector.new(config)
+      parser = Parser.new(config)
       detector.target_files.each_with_object({}) do |f, h|
-        f.ast = RubyVM::AbstractSyntaxTree.parse_file(f.absolute_path)
+        f.ast = parser.parse(f)
         h[f.relative_path] = f
       end
     end
