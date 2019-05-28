@@ -1,16 +1,16 @@
+require 'asts/file_info'
+
 module Asts
   class Detector
-    FileInfo = Struct.new(:absolute_path, :relative_path, :ast, keyword_init: true)
-
     def initialize(config)
       @config = config
     end
 
-    # @return [Array<Asts::Detector::FileInfo>]
+    # @return [Array<Asts::FileInfo>]
     def target_files
       file_infos = Dir.glob("#{@config.dir}/**/*").map do |e|
         relative_path = Pathname.new(e).relative_path_from(@config.dir).to_s
-        FileInfo.new(
+        Asts::FileInfo.new(
           absolute_path: e,
           relative_path: relative_path,
         )
