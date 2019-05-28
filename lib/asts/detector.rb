@@ -1,6 +1,7 @@
 module Asts
   class Detector
     FileInfo = Struct.new(:absolute_path, :relative_path, :ast, keyword_init: true)
+
     def initialize(config)
       @config = config
     end
