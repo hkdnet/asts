@@ -17,10 +17,9 @@ module Asts
 
     def extract
       detector = Detector.new(config)
-      detector.all_files.each_with_object({}) do |f, h|
-        if detector.target?(f)
-          h[f] = RubyVM::AbstractSyntaxTree.parse_file(f)
-        end
+      detector.target_files.each_with_object({}) do |f, h|
+        f.ast = RubyVM::AbstractSyntaxTree.parse_file(f.absolute_path)
+        h[f.relative_path] = f
       end
     end
   end

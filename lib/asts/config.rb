@@ -1,6 +1,6 @@
 module Asts
   class Config
-    attr_accessor :dir, :exts
+    attr_accessor :dir, :exts, :exclude
 
     def initialize
       @exts = ['.rb']
